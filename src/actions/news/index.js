@@ -1,5 +1,5 @@
 
-import  * as TYPES from './ActionTypes'
+import  * as TYPES from '../ActionTypes'
 
 let testUser={
     name:'xiaoming22',
