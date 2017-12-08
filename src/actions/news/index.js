@@ -40,7 +40,6 @@ function isLogining(testUser){
       return{
           'type':TYPES.Login_doing,
            user:testUser,
-
       }
 }
 
