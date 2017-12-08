@@ -11,10 +11,12 @@
   "dependencies": {
     "react": "16.0.0",
     "react-native": "0.51.0",
+    "react-native-root-toast": "^2.2.1",
     "react-navigation": "^1.0.0-beta.21",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "teaset": "^0.4.9"
   },
   "devDependencies": {
     "babel-jest": "21.2.0",
