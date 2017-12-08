@@ -73,10 +73,10 @@ export default Tab = TabNavigator(
         mode: 'card',
         tabBarComponent:TabBarBottom,
         tabBarPosition:'bottom',
-        swipeEnabled:true,
-        animationEnabled:false,
+        swipeEnabled: true, // 是否可以左右滑动切换tab
+        animationEnabled: false, // 切换页面时是否有动画效果
         lazy:true,
-        backBehavior:'none',
+        // backBehavior: 'none',  按 back 键是否跳转到第一个Tab(首页)， none 为不跳转
         tabBarOptions:{
             activeTintColor:'#06c1ae',
             inactiveTintColor:'#979797',
