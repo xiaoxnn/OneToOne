@@ -4,9 +4,6 @@ var deviceHeight = Dimensions.get('window').height;//640
 var deviceWidth = Dimensions.get('window').width;//360
 import {toast}  from '../../../utils'
 export  default  class  BottomOne extends Component<{}>{
-
-
-
     constructor(props){
         super(props);
         this.state={
