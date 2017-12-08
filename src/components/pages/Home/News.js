@@ -34,6 +34,7 @@ export  default  class  BottomOne extends Component<{}>{
     }
 }
 
+
 const styles = StyleSheet.create({
     contain:{
              width:deviceWidth,
