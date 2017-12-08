@@ -1,13 +1,6 @@
 import React, {Component} from 'react';
-import {AppRegistry, Text, FlatList, StyleSheet, Dimensions, View, TouchableOpacity, ToastAndroid} from 'react-native';
 
-var deviceHeight = Dimensions.get('window').height;//640
-var deviceWidth = Dimensions.get('window').width;//360
-import {
-    StackNavigator
-}
-    from 'react-navigation';
-
+import {  StackNavigator}  from 'react-navigation';
 import CardStackStyleInterpolator from 'react-navigation/src/views/CardStack/CardStackStyleInterpolator'
 import Tab from './pages/Home/Tab'
 import News from './pages/Home/News'
