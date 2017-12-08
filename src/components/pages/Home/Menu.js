@@ -3,7 +3,8 @@ import { AppRegistry ,Text,FlatList,StyleSheet,Dimensions,View,TouchableOpacity,
 var deviceHeight = Dimensions.get('window').height;//640
 var deviceWidth = Dimensions.get('window').width;//360
 
-export  default  class  BottomOne extends Component<{}>{
+
+export  default  class  BottomTwo extends Component<{}>{
 
 
 
@@ -19,6 +20,9 @@ export  default  class  BottomOne extends Component<{}>{
 
     }
 
+    Refresh(){
+
+    }
 
     pushback() {
         this.props.navigation.goBack();
@@ -26,9 +30,10 @@ export  default  class  BottomOne extends Component<{}>{
 
 
     render(){
+
         return(
             <View style={styles.contain}>
-                <Text>第一个页面</Text>
+                <Text>第2个页面</Text>
             </View>
            )
     }
@@ -41,6 +46,5 @@ const styles = StyleSheet.create({
              backgroundColor:'#fff',
              alignItems:'center'
     }
-
 
 });
