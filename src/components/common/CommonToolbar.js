@@ -32,7 +32,7 @@ export default class CommonToolbar extends Component {
      */
     componentDidMount() {
         NetInfo.isConnected.addEventListener(
-            'change',
+            'connectionChange',
             this._handleConnectivityChange
         );
     }
@@ -43,7 +43,7 @@ export default class CommonToolbar extends Component {
      */
     componentWillUnmount() {
         NetInfo.isConnected.removeEventListener(
-            'change',
+            'connectionChange',
             this._handleConnectivityChange
         );
     }

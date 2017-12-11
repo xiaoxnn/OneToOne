@@ -177,5 +177,12 @@ export const commonStyles = StyleSheet.create({
         backgroundColor: '#F4F4F4',
         height: 0.5,
         width:deviceWidth*0.96
-    }
+    },
+    between:{
+      justifyContent:'space-between'
+    },
+    around:{
+        justifyContent:'space-around'
+    },
+
 });

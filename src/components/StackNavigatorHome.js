@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import {  StackNavigator}  from 'react-navigation';
+import {StackNavigator} from 'react-navigation';
 import CardStackStyleInterpolator from 'react-navigation/src/views/CardStack/CardStackStyleInterpolator'
 import Tab from './pages/Home/Tab'
 import News from './pages/Home/News'
@@ -8,6 +8,7 @@ import Launch from './pages/Launch'
 import Menu from './pages/Home/Menu'
 import Video from './pages/Home/Video'
 import My from './pages/Home/My'
+import MoviePlayer from './common/moviePlayer'
 
 export default StackNavigatorHome =
     StackNavigator({
@@ -36,6 +37,10 @@ export default StackNavigatorHome =
             My: {
                 screen:
                 My
+            },
+            MoviePlayer: {
+                screen:
+                MoviePlayer
             }
         }, {
             headerMode: 'noon',// 导航栏的显示模式, screen: 有渐变透明效果, float: 无透明效果, none: 隐藏导航栏
