@@ -2,10 +2,9 @@
  * Created by guangqiang on 2017/9/7.
  */
 import React, {Component} from 'react'
-import {View, Text,Image, TouchableOpacity, Slider, ActivityIndicator, Modal, Platform,Dimensions,StyleSheet,StatusBar} from 'react-native'
+import {View, Text,Image, TouchableOpacity, Slider, ActivityIndicator, Modal, Platform,Dimensions,StyleSheet,StatusBar,BackHandler} from 'react-native'
 import Video from 'react-native-video'
 import Orientation from 'react-native-orientation'
-import {commonStyles} from '../common/CommonStyles'
 import {formatTime} from '../../utils/formatTime'
 var deviceHeight = Dimensions.get('window').height;//640
 var deviceWidth = Dimensions.get('window').width;//360
@@ -22,7 +21,6 @@ export default class MoviePlayer extends Component {
       currentTime: 0.00,
       duration: 0.00,
       paused: false,
-      playIcon: 'music_paused_o',
       isTouchedScreen: true,
       modalVisible: true,
       isLock: false
@@ -41,12 +39,30 @@ export default class MoviePlayer extends Component {
   componentDidMount() {
     Orientation.addOrientationListener(this._updateOrientation)
     Orientation.addSpecificOrientationListener(this._updateSpecificOrientation)
+      if (Platform.OS === 'android') {
+          BackHandler.addEventListener('hardwareBackPress', this.onBackAndroid);
+      }
   }
 
   componentWillUnmount() {
     Orientation.removeOrientationListener(this._updateOrientation)
     Orientation.removeSpecificOrientationListener(this._updateSpecificOrientation)
+      if (Platform.OS === 'android') {
+          BackHandler.removeEventListener('hardwareBackPress', this.onBackAndroid);
+      }
   }
+
+    onBackAndroid = () => {
+        if(this.state.orientation !== 'PORTRAIT'){
+            Orientation.lockToPortrait()
+            this.setState({
+                isLock:false,
+                orientation: this.state.orientation === 'PORTRAIT'?'LANDSCAPE':'PORTRAIT'
+            })
+            return true
+        }
+        return false
+    };
 
   _updateOrientation(orientation){
 
@@ -95,24 +111,15 @@ export default class MoviePlayer extends Component {
 
   showMessageBar = title => msg => type => {
       toast.showLongCenter(msg);
-    // MessageBarManager.showAlert({
-    //   title: title,
-    //   message: msg,
-    //   alertType: type,
-    // })
   }
 
   play() {
     this.setState({
       paused: !this.state.paused,
-      playIcon: this.state.paused ? 'music_paused_o' : 'music_playing_s'
     })
   }
 
   changeOrientation(){
-      // Orientation.lockToLandscapeLeft()
-      // Orientation.lockToPortrait()
-
       this.state.orientation === 'PORTRAIT'?Orientation.lockToLandscapeLeft():Orientation.lockToPortrait()
       this.setState({
             orientation: this.state.orientation === 'PORTRAIT'?'LANDSCAPE':'PORTRAIT'
@@ -131,7 +138,7 @@ export default class MoviePlayer extends Component {
           <ActivityIndicator
             animating={true}
             style={[{height: 80}]}
-            color={'#F00'}
+            color={'#06c1ae'}
             size="large"
           />
         </View>
@@ -145,8 +152,9 @@ export default class MoviePlayer extends Component {
     return (
 
       <TouchableOpacity
+          disabled={this.state.isLock}
           activeOpacity={0.7}
-        style={[styles.movieContainer, {height: orientation === 'PORTRAIT' ? playerHeight :deviceWidth,
+          style={[styles.movieContainer, {height: orientation === 'PORTRAIT' ? playerHeight :deviceWidth,
           marginTop: orientation === 'PORTRAIT' ? Platform.OS === 'ios' ? 20 : 0 : 0}]}
         onPress={() => this.setState({isTouchedScreen: !this.state.isTouchedScreen})}>
         <Video source={{uri: url}}
@@ -171,7 +179,7 @@ export default class MoviePlayer extends Component {
                style={[styles.videoPlayer]}
         />
 
-
+          {  this.state.isTouchedScreen && !isLock ?
             <View style={styles.navContentStyle}>
               <View style={{flexDirection: 'row', alignItems:'center', flex: 1}}>
                 <TouchableOpacity
@@ -183,7 +191,9 @@ export default class MoviePlayer extends Component {
                 </TouchableOpacity>
                 <Text style={{backgroundColor: 'transparent', color:'#fff', marginLeft: 10}}>{title}</Text>
               </View>
-            </View>
+            </View>:
+              <View style={{height:44}}/>
+          }
         {
           orientation !== 'PORTRAIT' ?
             <TouchableOpacity
@@ -191,7 +201,7 @@ export default class MoviePlayer extends Component {
               onPress={() => this.setState({isLock: !this.state.isLock})}
             >
               <Image source={ this.state.isLock ?require('../../image/lock.png'):require('../../image/unclok.png')}
-                     style={styles.image}/>
+                     style={styles.lockimag}/>
              </TouchableOpacity> : null
         }
         {
@@ -207,7 +217,7 @@ export default class MoviePlayer extends Component {
                   style={styles.slider}
                   value={this.state.slideValue}
                   maximumValue={this.state.duration}
-                  minimumTrackTintColor={'#e74c3c'}
+                  minimumTrackTintColor={'#06c1ae'}
                   maximumTrackTintColor={'#989898'}
                   step={1}
                   onValueChange={value => this.setState({currentTime: value})}
@@ -245,7 +255,7 @@ const styles = StyleSheet.create({
   },
   videoPlayer: {
     position: 'absolute',
-    top: 44,
+    top: 0,
     left: 0,
     bottom: 0,
     right: 0,
@@ -295,6 +305,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     marginHorizontal: 5
   },
+    lockimag:{
+        width:26,
+        height:26,
+    },
     image:{
        width:15,
         height:15,
