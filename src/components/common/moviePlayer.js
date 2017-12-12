@@ -119,6 +119,18 @@ export default class MoviePlayer extends Component {
     })
   }
 
+
+  goback(){
+    if(this.state.orientation === 'PORTRAIT'){
+        this.props.navigation.goBack()
+    }else{
+        Orientation.lockToPortrait()
+        this.setState({
+            orientation: this.state.orientation === 'PORTRAIT'?'LANDSCAPE':'PORTRAIT'
+        })
+    }
+  }
+
   changeOrientation(){
       this.state.orientation === 'PORTRAIT'?Orientation.lockToLandscapeLeft():Orientation.lockToPortrait()
       this.setState({
@@ -185,7 +197,7 @@ export default class MoviePlayer extends Component {
                 <TouchableOpacity
                     disabled={this.state.isLock}
                   style={{backgroundColor:  'transparent'}}
-                     onPress={()=>this.changeOrientation()}>
+                     onPress={()=>this.goback()}>
                   <Image source={require('../../image/back.png')}
                          style={styles.image}/>
                 </TouchableOpacity>
