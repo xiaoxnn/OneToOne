@@ -1,8 +1,8 @@
 import  {combineReducers} from 'redux'
+import   VideoReducer from './VideoReducer'
 
-import   UserReducer from './UserReducer'
 const  RootReducers=combineReducers({
-    UserReducer
+    VideoReducer
 });
 
 export  default  RootReducers;

@@ -19,22 +19,6 @@ export  default  class  BottomOne extends Component<{}>{
         }
     }
 
-    componentWillMount(){
-        if (Platform.OS === 'android') {
-            BackHandler.addEventListener('hardwareBackPress', this.onBackAndroid);
-        }
-    }
-
-    componentWillUnmount(){
-        if (Platform.OS === 'android') {
-            BackHandler.removeEventListener('hardwareBackPress', this.onBackAndroid);
-        }
-    }
-
-    onBackAndroid = () => {
-        return false
-    };
-
     pushback() {
         this.props.navigation.goBack();
     }

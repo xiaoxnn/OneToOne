@@ -29,6 +29,7 @@ type Props = {
     footerFailureText?: string,
     footerNoMoreDataText?: string,
     itemSeparator?:int,
+    refreshControlColor?:any,
 }
 
 class RefreshListView extends PureComponent {
@@ -41,6 +42,7 @@ class RefreshListView extends PureComponent {
         footerFailureText: '点击重新加载',
         footerNoMoreDataText: '已加载全部数据',
         itemSeparator:10,
+        refreshControlColor:['#f00']
     }
 
 
@@ -107,7 +109,7 @@ class RefreshListView extends PureComponent {
                 onEndReachedThreshold={0.1}
                 refreshControl= { this.props.headerRefreshEnable?  <RefreshControl
                     progressBackgroundColor={'#fff'}
-                    colors={['#f00']}
+                    colors={this.props.refreshControlColor}
                     refreshing={this.props.refreshState == RefreshState.HeaderRefreshing}
                     onRefresh={() => this.onHeaderRefresh()}/>
                 :null}
