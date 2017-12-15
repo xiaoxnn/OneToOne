@@ -7,16 +7,14 @@ import  InitComponent from '../../common/InitComponent'
 import  CommonStyles from '../../common/CommonStyles'
 import  CommonToolbar from '../../common/CommonToolbar'
 import RefreshListView,{RefreshState}  from '../../common/RefreshListView'
-export  default  class  BottomOne extends Component<{}>{
-    constructor(props){
-        super(props);
-        this.state={
-            loaded:false,   //判断页面是否有数据
-            empty:false,    //判断页面是否为空
-            connectfail:false,  //初始化连接服务器失败
-            dataSource:[],
-            refreshState: RefreshState.Idle,
-        }
+import {connect} from 'react-redux';
+import {getPicture}  from '../../../actions/news'
+export   class  News extends Component<{}>{
+
+
+
+    componentDidMount() {
+        this.props.dispatch(getPicture(this.props.page,this.props.size,RefreshState.Idle));
     }
 
     pushback() {
@@ -30,17 +28,27 @@ export  default  class  BottomOne extends Component<{}>{
      *头部刷新
      */
     onHeaderRefresh = () => {
-
+        this.props.dispatch(getPicture(-1,this.props.size,RefreshState.HeaderRefreshing));
     }
 
     /**
      *  脚部加载更多
      */
     onFooterRefresh = () => {
-
+        this.props.dispatch(getPicture(this.props.page,this.props.size,RefreshState.FooterRefreshing));
     }
+
+    _renderItem({item,index }){
+        return (
+            <View>
+                <Text>{index}</Text>
+            </View>
+        )
+    }
+
     render(){
-        if(!this.state.loaded){
+        let {data,loaded,empty,connectfail,refreshState}= this.props
+        if(!loaded){
             return (
                 <View style={styles.contain}>
                     <StatusBar
@@ -48,7 +56,7 @@ export  default  class  BottomOne extends Component<{}>{
                         backgroundColor={"#06c1ae"}
                     />
                     <CommonToolbar   title='新闻' callback={this.pushback.bind(this) }   rightIconVisiable={false}/>
-                    <InitComponent   refresh={this.Refresh.bind(this) }again={this.state.loaded}  empty={this.state.empty} connectfail={this.state.connectfail}/>
+                    <InitComponent   refresh={this.Refresh.bind(this) }again={loaded}  empty={empty} connectfail={connectfail}/>
                 </View>
             )
         }
@@ -57,9 +65,9 @@ export  default  class  BottomOne extends Component<{}>{
                 <CommonToolbar   title='新闻' callback={this.pushback.bind(this) }leftIconVisiable={false} />
                 <RefreshListView
                     style={{marginTop:10}}
-                    data={this.state.dataSource}
+                    data={data}
                     renderItem={this._renderItem.bind(this)}
-                    refreshState={this.state.refreshState}
+                    refreshState={refreshState}
                     onHeaderRefresh={this.onHeaderRefresh}
                     onFooterRefresh={this.onFooterRefresh}
                     // 可选
@@ -83,5 +91,20 @@ const styles = StyleSheet.create({
              alignItems:'center'
     }
 
-
 });
+
+
+function select(store){
+    return {
+        page:store.VideoReducer.page,
+        size:store.VideoReducer.size,
+        data: store.VideoReducer.dataSource,
+        loaded:store.VideoReducer.loaded,   //判断页面是否有数据
+        empty:store.VideoReducer.empty,     //判断页面是否为空
+        connectfail:store.VideoReducer.connectfail,  //初始化连接服务器失败
+        refreshState: store.VideoReducer.refreshState,
+    }
+}
+
+
+export default connect(select)(News);
