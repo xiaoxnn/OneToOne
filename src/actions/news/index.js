@@ -1,62 +1,54 @@
 
 import  * as TYPES from '../ActionTypes'
-
-let testUser={
-    name:'xiaoming22',
-    age:24
-}
-
-
-
-function initdata() {
-
+function getPicture(pn,rn,type){
     return (dispatch)=>{
-        dispatch(initFinish());
-    }
-}
-
-function doLogin  (){
-    return (dispatch)=>{
-        dispatch(isLogining(testUser));
-        let rel=fetch('http://www.baidu.com').then((res)=>{
-            dispatch(LoginSuccess(true,testUser));
-        }).catch((e)=>{
-            dispatch(LoginSuccess(false,testUser));
-        })
+        dispatch(refreshState(type))
+        var uu="http://image.baidu.com/search/index?tn=resultjson&ie=utf-8&word=%E5%B7%B4%E9%BB%8E%E8%BF%AA%E6%96%AF%E5%B0%BC"+"&pn="+pn+"&rn="+rn;
+        fetch(uu)
+            .then((response) => response.json())
+            .then((responseData) => {
+                if(responseData.data.length!=0){
+                    dispatch(LoadSuccess(responseData.data,type));
+                }else{
+                    dispatch(loadSuccessEmpty());
+                }
+            })
+            .catch((error) => {
+                dispatch(LoadFail());
+            })
+            .done();
     }
 }
 
 
-
-function initFinish() {
+function refreshState(state) {
     return{
-        'type':TYPES.Login_finish,
-        loaded:true,
-        user:testUser,
+        'type':TYPES.refresh_state,
+        state:state
     }
 }
 
-function isLogining(testUser){
-      return{
-          'type':TYPES.Login_doing,
-           user:testUser,
-      }
-}
-
-function LoginSuccess(isSuccess,testUser){
-    return {
-        'type':TYPES.Login_finish,
-        isSuccess:isSuccess,
-        user:testUser,
+function LoadSuccess(data,state){
+    return{
+        'type':TYPES.load_success_video,
+        data:data,
         loaded:true,
+        state:state
     }
 }
 
+function loadSuccessEmpty() {
+    return{
+        'type':TYPES.load_success_empty,
+    }
+}
 
+function LoadFail(){
+    return{
+        'type':TYPES.load_fail_video,
+    }
+}
 
 module.exports={
-    doLogin,
-    isLogining,
-    LoginSuccess,
-    initdata
+    getPicture,
 }
