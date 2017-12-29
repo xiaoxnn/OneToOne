@@ -17,3 +17,10 @@ export const load_success_video = 'LOAD_SUCCESS_VIDEO';
 
 export const load_success_empty = 'LOAD_SUCCESS_EMPTY';
 export const load_fail_video = 'LOAD_FAIL_VIDEO';
+
+
+
+export const refresh_state_news = 'REFRESH_STATE_NEWS';
+export const load_success_news = 'LOAD_SUCCESS_NEWS';
+export const load_success_empty_news = 'LOAD_SUCCESS_EMPTY_NEWS';
+export const load_fail_news = 'LOAD_FAIL_NEWS';

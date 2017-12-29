@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import { Text,FlatList,StyleSheet,Dimensions,View,TouchableOpacity,StatusBar,BackHandler,Platform} from 'react-native';
+import { Text,FlatList,StyleSheet,Dimensions,View,TouchableOpacity,StatusBar,BackHandler,AsyncStorage} from 'react-native';
 var deviceHeight = Dimensions.get('window').height;//640
 var deviceWidth = Dimensions.get('window').width;//360
 import {toast}  from '../../../utils'
@@ -51,18 +51,14 @@ export   class  News extends Component<{}>{
         if(!loaded){
             return (
                 <View style={styles.contain}>
-                    <StatusBar
-                        hidden={false}
-                        backgroundColor={"#06c1ae"}
-                    />
-                    <CommonToolbar   title='新闻' callback={this.pushback.bind(this) }   rightIconVisiable={false}/>
+                    <CommonToolbar   title='新闻' callback={this.pushback.bind(this) } />
                     <InitComponent   refresh={this.Refresh.bind(this) }again={loaded}  empty={empty} connectfail={connectfail}/>
                 </View>
             )
         }
         return(
             <View style={styles.contain}>
-                <CommonToolbar   title='新闻' callback={this.pushback.bind(this) }leftIconVisiable={false} />
+                <CommonToolbar   title='新闻' callback={this.pushback.bind(this) } />
                 <RefreshListView
                     style={{marginTop:10}}
                     data={data}
@@ -96,13 +92,13 @@ const styles = StyleSheet.create({
 
 function select(store){
     return {
-        page:store.VideoReducer.page,
-        size:store.VideoReducer.size,
-        data: store.VideoReducer.dataSource,
-        loaded:store.VideoReducer.loaded,   //判断页面是否有数据
-        empty:store.VideoReducer.empty,     //判断页面是否为空
-        connectfail:store.VideoReducer.connectfail,  //初始化连接服务器失败
-        refreshState: store.VideoReducer.refreshState,
+        page:store.NewsReducer.page,
+        size:store.NewsReducer.size,
+        data: store.NewsReducer.dataSource,
+        loaded:store.NewsReducer.loaded,   //判断页面是否有数据
+        empty:store.NewsReducer.empty,     //判断页面是否为空
+        connectfail:store.NewsReducer.connectfail,  //初始化连接服务器失败
+        refreshState: store.NewsReducer.refreshState,
     }
 }
 

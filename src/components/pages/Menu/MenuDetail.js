@@ -1,12 +1,13 @@
 import React,{Component} from 'react';
-import { AppRegistry ,Text,FlatList,StyleSheet,Dimensions,View,TouchableOpacity,AsyncStorage,Alert} from 'react-native';
+import { AppRegistry ,Text,Alert,StyleSheet,Dimensions,View,TouchableOpacity,ToastAndroid,AsyncStorage} from 'react-native';
 var deviceHeight = Dimensions.get('window').height;//640
 var deviceWidth = Dimensions.get('window').width;//360
 import {toast}  from '../../../utils'
 import  InitComponent from '../../common/InitComponent'
 import CommonStyles, {commonStyles} from '../../common/CommonStyles'
 import  CommonToolbar from '../../common/CommonToolbar'
-export  default  class  Menu extends Component<{}>{
+import  Toast from 'react-native-toast-xn'
+export  default  class  MenuDetail extends Component<{}>{
 
 
 
@@ -23,8 +24,14 @@ export  default  class  Menu extends Component<{}>{
     }
 
     _click(){
-        AsyncStorage.setItem('NewsKey',this.props.navigation.state.key)
-        this.props.navigation.navigate('MenuDetail');
+        AsyncStorage.getItem('NewsKey')
+            .then((value) => {
+                this.props.navigation.goBack (value);
+            })
+            .catch((error) => {
+                console.warn(error);
+            }).done();
+
     }
 
     pushback() {
@@ -34,14 +41,14 @@ export  default  class  Menu extends Component<{}>{
     render(){
         return(
             <View style={styles.contain}>
-                <CommonToolbar   title='新闻' callback={this.pushback.bind(this) } />
-                <TouchableOpacity onPress={()=>this._click()}>
+                <CommonToolbar   title='菜单' callback={this.pushback.bind(this) } leftIconVisiable={false}/>
+                <TouchableOpacity onPress={()=>Toast.toast('hello')}>
                     <View style={styles.test}>
-                        <Text style={commonStyles.Text_33_13}>跳转</Text>
+                        <Text style={commonStyles.Text_33_13}>跳转首页</Text>
                     </View>
                 </TouchableOpacity>
             </View>
-           )
+        )
     }
 }
 

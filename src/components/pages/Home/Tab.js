@@ -9,10 +9,12 @@ import News  from './News'
 import Menu  from './Menu'
 import Video  from './Video'
 import My  from './My'
+import  NavigatorHome from '../NavigatorHome'
 export default Tab = TabNavigator(
     {
-        News:{
-            screen:News,
+
+        NavigatorHome:{
+            screen:NavigatorHome,
             navigationOptions:({navigation}) => ({
                 tabBarLabel:'首页',
                 tabBarIcon:({focused,tintColor}) => (
@@ -25,6 +27,20 @@ export default Tab = TabNavigator(
                 )
             }),
         },
+        // News:{
+        //     screen:News,
+        //     navigationOptions:({navigation}) => ({
+        //         tabBarLabel:'首页',
+        //         tabBarIcon:({focused,tintColor}) => (
+        //             <TabBarItem
+        //                 tintColor={tintColor}
+        //                 focused={focused}
+        //                 normalImage={require('../../../image/news_2.png')}
+        //                 selectedImage={require('../../../image/news_1.png')}
+        //             />
+        //         )
+        //     }),
+        // },
         Menu:{
             screen:Menu,
             navigationOptions:({navigation}) => ({
@@ -66,14 +82,16 @@ export default Tab = TabNavigator(
                     />
                 )
             }),
-        },
+        }
+
+
     },
 
     {
         mode: 'card',
         tabBarComponent:TabBarBottom,
         tabBarPosition:'bottom',
-        swipeEnabled: true, // 是否可以左右滑动切换tab
+        swipeEnabled: false, // 是否可以左右滑动切换tab
         animationEnabled: false, // 切换页面时是否有动画效果
         lazy:true,
         // backBehavior: 'none',  按 back 键是否跳转到第一个Tab(首页)， none 为不跳转

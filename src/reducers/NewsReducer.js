@@ -16,7 +16,7 @@ export  default function  getData(state=initialstate,action){
 
     switch (action.type){
 
-        case TYPES.load_success_video:
+        case TYPES.load_success_news:
             return Object.assign({},state,{
                 loaded:action.loaded,
                 dataSource:action.state==RefreshState.Idle||action.state==RefreshState.HeaderRefreshing?action.data:state.dataSource.concat(action.data),
@@ -24,18 +24,18 @@ export  default function  getData(state=initialstate,action){
                 refreshState: RefreshState.Idle,
             })
 
-        case TYPES.load_success_empty:
+        case TYPES.load_success_empty_news:
             return Object.assign({},state,{
                 empty:true,
             })
 
-        case TYPES.load_fail_video:
+        case TYPES.load_fail_news:
             return Object.assign({},state,{
                 refreshState: RefreshState.Failure,
                 connectfail:true,
             })
 
-        case TYPES.refresh_state:
+        case TYPES.refresh_state_news:
             return Object.assign({},state,{
                 refreshState:action.state,
             })

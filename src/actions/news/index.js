@@ -23,14 +23,14 @@ function getPicture(pn,rn,type){
 
 function refreshState(state) {
     return{
-        'type':TYPES.refresh_state,
+        'type':TYPES.refresh_state_news,
         state:state
     }
 }
 
 function LoadSuccess(data,state){
     return{
-        'type':TYPES.load_success_video,
+        'type':TYPES.load_success_news,
         data:data,
         loaded:true,
         state:state
@@ -39,13 +39,13 @@ function LoadSuccess(data,state){
 
 function loadSuccessEmpty() {
     return{
-        'type':TYPES.load_success_empty,
+        'type':TYPES.load_success_empty_news,
     }
 }
 
 function LoadFail(){
     return{
-        'type':TYPES.load_fail_video,
+        'type':TYPES.load_fail_news,
     }
 }
 
