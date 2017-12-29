@@ -38,7 +38,6 @@ export default class Bottom extends Component<{}> {
         this.props.navigation.goBack();
     }
 
-
     render() {
         return (
             <View style={styles.contain}>
